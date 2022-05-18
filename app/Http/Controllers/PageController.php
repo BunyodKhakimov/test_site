@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
@@ -25,5 +27,21 @@ class PageController extends Controller
         $form = $decoded_data['data'];
 
         return view('index')->with('form', $form)->with('fields', $fields);
+    }
+
+    public function store(Request $request, $uid){
+        $client = new Client;
+        $status = $client->post(env('DATA_API_LINK'), [
+            'json' => [
+                "uid" => $uid,
+                "request" => $request->all()
+            ]
+        ]);
+
+        if ($status == 200) {
+            return redirect()->back()->with('success', 'Answer is saved');
+        }
+
+        return redirect()->back()->with('info', 'Answer is not saved');
     }
 }
