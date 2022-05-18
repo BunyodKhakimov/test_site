@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('/forms/{uid}', 'PageController@index');
+Route::post('/forms/{uid}', 'PageController@store')->name('answers.store');
