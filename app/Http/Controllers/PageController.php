@@ -36,7 +36,7 @@ class PageController extends Controller
                 "uid" => $uid,
                 "request" => $request->all()
             ]
-        ]);
+        ])->getStatusCode();
 
         if ($status == 200) {
             return redirect()->back()->with('success', 'Answer is saved');
