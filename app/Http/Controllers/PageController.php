@@ -11,7 +11,7 @@ class PageController extends Controller
 {
     public function index($form_uid){
         // get json from api
-        $data = Http::get("http://localhost/test_data/public/api/forms/$form_uid")->body();
+        $data = Http::get(env('DATA_API_LINK')."/forms/$form_uid")->body();
 
         // json to associative array
         $decoded_data = json_decode($data, true);
@@ -31,7 +31,7 @@ class PageController extends Controller
 
     public function store(Request $request, $uid){
         $client = new Client;
-        $status = $client->post(env('DATA_API_LINK'), [
+        $status = $client->post(env('DATA_API_LINK').'/answers', [
             'json' => [
                 "uid" => $uid,
                 "request" => $request->all()
